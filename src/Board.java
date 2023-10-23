@@ -1,26 +1,47 @@
+package omok.model;
+
+import omok.model.Player;
 public class Board {
+    protected int[][] board;
+    Player player1;
+    Player player2;
+    int size;
     /** Create a new board of the default size. */
     public Board() {
+        size = 15;
+        this.board = new int[size][size];
     }
 
     /** Create a new board of the specified size. */
     public Board(int size) {
+        this.size = size;
+        this.board = new int[size][size];
     }
 
     /** Return the size of this board. */
     public int size() {
+        return size;
     }
 
     /** Removes all the stones placed on the board, effectively
      * resetting the board to its original state.
      */
     public void clear() {
+        board = new int[size][size];
     }
 
     /** Return a boolean value indicating whether all the places
      * on the board are occupied or not.
      */
     public boolean isFull() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     /**
      * Place a stone for the specified player at a specified
@@ -31,6 +52,12 @@ public class Board {
      * @param player Player whose stone is to be placed
      */
     public void placeStone(int x, int y, Player player) {
+        if(player1.name().equals(player.name())){
+            board[y][x] = 1;
+        }
+        else{
+            board[y][x] = 2;
+        }
     }
 
     /**
@@ -41,19 +68,29 @@ public class Board {
      * @param y 0-based row (horizontal) index
      */
     public boolean isEmpty(int x, int y) {
+        if(board[y][x] == 0){
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Is the specified place on the board occupied?
+     * Return a boolean value indicating whether the specified
+     * intersection (x, y) on the board is occupied or not.
+     *
      *
      * @param x 0-based column (vertical) index
      * @param y 0-based row (horizontal) index
      */
     public boolean isOccupied(int x, int y) {
+        if(board[y][x] == 0){
+            return false;
+        }
+        return true;
     }
 
     /**
-     * Rreturn a boolean value indicating whether the specified
+     * Return a boolean value indicating whether the specified
      * intersection (x, y) on the board is occupied by the given
      * player or not.
      *
@@ -61,6 +98,17 @@ public class Board {
      * @param y 0-based row (horizontal) index
      */
     public boolean isOccupiedBy(int x, int y, Player player) {
+        if(player1.name().equals(player.name())){
+            if(board[y][x] == 1){
+                return true;
+            }
+        }
+        if(player2.name().equals(player.name())){
+            if(board[y][x] == 2){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -71,6 +119,15 @@ public class Board {
      * @param y 0-based row (horizontal) index
      */
     public Player playerAt(int x, int y) {
+        if(board[y][x] == 1){
+            return player1;
+        }
+        else if(board[y][x] == 2){
+            return player2;
+        }
+        else{
+            return null;
+        }
     }
 
     /**
@@ -110,6 +167,13 @@ public class Board {
         public Place(int x, int y) {
             this.x = x;
             this.y = y;
+        }
+
+        public void selectPlayer1(Player player){
+            player1 = new Player(player.name());
+        }
+        public void selectPlayer2(Player player){
+            player2 = new Player(player.name());
         }
 
         // other methods if needed ...
