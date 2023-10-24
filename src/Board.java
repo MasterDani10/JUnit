@@ -205,11 +205,6 @@ public class Board {
             this.x = x;
             this.y = y;
         }
-
-
-
-
-
         // other methods if needed ...
     }
 }

@@ -75,6 +75,43 @@ class BoardTest {
         board.placeStone(0,5,luis);
         assertTrue(board.isWonBy(luis));
     }
+
+    @Test
+    void isWonByHorizontal() {
+        board.placeStone(7,4,ben);
+        board.placeStone(8,4,ben);
+        board.placeStone(9,4,ben);
+        board.placeStone(10,4,ben);
+        board.placeStone(11,4,ben);
+        assertTrue(board.isWonBy(ben));
+    }
+    @Test
+    void isWonByVertical() {
+        board.placeStone(9, 7, luis);
+        board.placeStone(9, 6, luis);
+        board.placeStone(9, 3, luis);
+        board.placeStone(9, 4, luis);
+        board.placeStone(9, 5, luis);
+        assertTrue(board.isWonBy(luis));
+    }
+    @Test
+    void isWonByDiagonal() {
+        board.placeStone(2,2,ben);
+        board.placeStone(6,6,ben);
+        board.placeStone(3,3,ben);
+        board.placeStone(4,4,ben);
+        board.placeStone(5,5,ben);
+        assertTrue(board.isWonBy(ben));
+    }
+    @Test
+    void isWonByFalse() {
+        board.placeStone(0,1,luis);
+        board.placeStone(0,2,luis);
+        board.placeStone(0,3,ben);
+        board.placeStone(0,4,luis);
+        board.placeStone(0,5,luis);
+        assertFalse(board.isWonBy(luis));
+    }
 //
 //    @Test
 //    void winningRow() {
