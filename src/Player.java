@@ -1,5 +1,3 @@
-package omok.model;
-
 public class Player {
     /** Name of this player. */
     private final String name;

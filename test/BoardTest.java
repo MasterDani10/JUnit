@@ -66,9 +66,15 @@ class BoardTest {
         assertEquals(luis.name(),board.playerAt(x,y).name());
     }
 
-//    @Test
-//    void isWonBy() {
-//    }
+    @Test
+    void isWonBy() {
+        board.placeStone(0,1,luis);
+        board.placeStone(0,2,luis);
+        board.placeStone(0,3,luis);
+        board.placeStone(0,4,luis);
+        board.placeStone(0,5,luis);
+        assertTrue(board.isWonBy(luis));
+    }
 //
 //    @Test
 //    void winningRow() {

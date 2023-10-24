@@ -1,6 +1,3 @@
-package omok.model;
-
-import omok.model.Player;
 public class Board {
     protected int[][] board;
     Player player1;
@@ -17,6 +14,8 @@ public class Board {
         this.size = size;
         this.board = new int[size][size];
     }
+
+
 
     /** Return the size of this board. */
     public int size() {
@@ -42,6 +41,12 @@ public class Board {
             }
         }
         return true;
+    }
+    public void selectPlayerOne(Player player){
+        player1 = new Player(player.name());
+    }
+    public void selectPlayerTwo(Player player){
+        player2 = new Player(player.name());
     }
     /**
      * Place a stone for the specified player at a specified
@@ -137,13 +142,45 @@ public class Board {
      * a horizontal, vertical, or diagonal direction.
      */
     public boolean isWonBy(Player player) {
+        int p;
+        if (player1.name().equals(player.name())) {
+            p = 1;
+        }
+        else{
+            p = 2;
+        }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == p &&
+                        (       checkDirection(board, i, j, 1, 0) ||
+                                checkDirection(board, i, j, 0, 1) ||
+                                checkDirection(board, i, j, 1, 1) ||
+                                checkDirection(board, i, j, 1, -1))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private boolean checkDirection(int[][] board, int x, int y, int dx, int dy) {
+        int n = board.length;
+        int player = board[x][y];
+
+        for (int i = 0; i < 5; i++){
+            int newX = x + dx * i;
+            int newY = y + dy * i;
+            if (newX < 0 || newX >= n || newY < 0 || newY >= n || board[newX][newY] != player) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** Return the winning row. For those who are not familiar with
      * the Iterable interface, you may return an object of
      * List<Place>. */
-    public Iterable<Place> winningRow() {
-    }
+//    public Iterable<Place> winningRow() {
+//    }
 
     /**
      * An intersection on an Omok board identified by its 0-based column
@@ -169,12 +206,9 @@ public class Board {
             this.y = y;
         }
 
-        public void selectPlayer1(Player player){
-            player1 = new Player(player.name());
-        }
-        public void selectPlayer2(Player player){
-            player2 = new Player(player.name());
-        }
+
+
+
 
         // other methods if needed ...
     }
