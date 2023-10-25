@@ -8,7 +8,8 @@ class BoardTest {
     Board board = new Board();
     Player luis = new Player("Luis");
     Player ben = new Player("Ben");
-    int x, y = 0;
+    int x = 7;
+    int y = 4;
     @BeforeEach
     void setUp(){
         board = new Board();
@@ -28,12 +29,31 @@ class BoardTest {
 
     @Test
     void clear() {
-
+        board.clear();
+        for (int i = 0; i < board.size; i++) {
+            for (int j = 0; j < board.size; j++) {
+                if(!board.isEmpty(i,j)){
+                    fail();
+                }
+            }
+        }
     }
 
     @Test
     void isFull() {
-
+        for (int i = 0; i < board.size; i++) {
+            for (int j = 0; j < board.size; j++) {
+                board.placeStone(i,j,luis);
+            }
+        }
+        assertTrue(board.isFull());
+    }
+    @Test
+    void isFullF() {
+        board.placeStone(7,8,luis);
+        board.placeStone(12,13,luis);
+        board.placeStone(11,7,luis);
+        assertFalse(board.isFull());
     }
 
     @Test
@@ -53,17 +73,42 @@ class BoardTest {
         board.placeStone(x,y,luis);
         assertTrue(board.isOccupied(x,y));
     }
+    @Test
+    void isOccupiedF() {
+        assertFalse(board.isOccupied(x,y));
+    }
 
     @Test
     void isOccupiedBy() {
         board.placeStone(x,y,luis);
         assertTrue(board.isOccupiedBy(x,y,luis));
     }
+    @Test
+    void isOccupiedBy2() {
+        board.placeStone(6,5,luis);
+        board.placeStone(8,2,ben);
+        assertTrue(board.isOccupiedBy(8,2,ben));
+    }
+    @Test
+    void isOccupiedByF() {
+        board.placeStone(x,y,luis);
+        assertFalse(board.isOccupiedBy(x,y,ben));
+    }
 
     @Test
     void playerAt() {
         board.placeStone(x,y,luis);
         assertEquals(luis.name(),board.playerAt(x,y).name());
+    }
+    @Test
+    void playerAt2() {
+        board.placeStone(3,3,luis);
+        board.placeStone(7,1,ben);
+        assertEquals(ben.name(),board.playerAt(7,1).name());
+    }
+    @Test
+    void playerAtNull() {
+        assertNull(board.playerAt(x, y));
     }
 
     @Test
