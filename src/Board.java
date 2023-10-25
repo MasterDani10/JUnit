@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     protected int[][] board;
     Player player1;
@@ -196,8 +199,39 @@ public class Board {
     /** Return the winning row. For those who are not familiar with
      * the Iterable interface, you may return an object of
      * List<Place>. */
-//    public Iterable<Place> winningRow() {
-//    }
+    public Iterable<Place> winningRow(Player player) {
+        int playerNum;
+        if (player1.name().equals(player.name())) {//checking if player 1 or 2
+            playerNum = 1;
+        } else {
+            playerNum = 2;
+        }
+        int[][] directions = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};//initializing directions for winning row
+
+        for (int i = 0; i < board.length; i++) {// iterating through rows and columns
+            for (int j = 0; j < board[i].length; j++) {
+                if(board[i][j] != playerNum){//if position doesnt contain stone continues to check rest of positions
+                    continue;
+                }
+                for(int dir = 0; dir < directions.length; dir++){
+                    List<Place> row = new ArrayList<>();//stores position of stones
+                    for(int count = 0; count < 5; count++){//checking for five in a row
+                        int x = i + directions[dir][0] * count;
+                        int y = j + directions[dir][1] * count;
+                        if(x < 0 || x >= board.length || y >= board.length || board[x][y] != playerNum){//checking coordinates of the stones and if its the players stone if not clear row
+                            row.clear();
+                            break;
+                        }
+                        row.add(new Place(x, y));//if coordinates of stone are the players then coordinates are stored
+                    }
+                    if(row.size() == 5){// if 5 coordinates are stored in the row returns the winning row
+                        return row;
+                    }
+                }
+            }
+        }
+        return new ArrayList<>();// if not returns an empty list
+    }
 
     /**
      * An intersection on an Omok board identified by its 0-based column
