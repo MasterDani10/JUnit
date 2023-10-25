@@ -162,6 +162,23 @@ public class Board {
         }
         return false;
     }
+
+    /**
+     * Checks for the winning sequence in the direction of the specified starting point (x, y).
+     *
+     * This method determines if there is a consecutive sequence of five stones in a row of the
+     * same player starting current position (x, y) and checking different directions (dx, dy).
+     *
+     * @param board The 2D array represents the game board. Each entry should be 0 (empty),
+     *              1 representing Player 1, or 2 representing player 2
+     * @param x The starting x-coordinate representing the columns on the board
+     * @param y The starting y-coordinate representing the rows on the board
+     * @param dx Checks the x-direction
+     * @param dy Checks the y-direction
+     * @return Returns true if there is a winning sequence in the specified direction
+     *         starting from the position (x, y). Otherwise, returns false.
+     */
+
     private boolean checkDirection(int[][] board, int x, int y, int dx, int dy) {
         int n = board.length;
         int player = board[x][y];
